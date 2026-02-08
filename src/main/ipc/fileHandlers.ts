@@ -83,11 +83,20 @@ function getVideoMetadata(filePath: string): Promise<{
         return
       }
 
+      // Parse frame rate (e.g., "30/1" -> 30)
+      let fps = 30
+      if (videoStream.r_frame_rate) {
+        const parts = videoStream.r_frame_rate.split('/')
+        if (parts.length === 2) {
+          fps = parseInt(parts[0]) / parseInt(parts[1])
+        }
+      }
+
       resolve({
         duration: metadata.format.duration || 0,
         width: videoStream.width || 0,
         height: videoStream.height || 0,
-        fps: eval(videoStream.r_frame_rate || '30/1') || 30,
+        fps,
         codec: videoStream.codec_name || 'unknown'
       })
     })
