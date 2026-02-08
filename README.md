@@ -1,103 +1,92 @@
 # Video Culler
 
-AI-powered video culling tool for wedding videographers. Automatically analyzes wedding footage, detects focus quality, and helps you select the best clips for your highlight reel.
+AI-powered desktop app for wedding videographers to automatically cull footage and generate edit-ready timelines for Final Cut Pro and Premiere Pro.
 
 ## Features
 
-- 🎥 **Smart Video Analysis** - Automatically scans folders of video files
-- 🎯 **Focus Detection** - Uses Laplacian variance to calculate focus scores (0-100)
-- 📊 **Visual Grid** - Browse all clips with thumbnails and scores
-- ✅ **Manual Selection** - Click to select/deselect clips for your timeline
-- 📤 **FCPXML Export** - Generate timeline for Final Cut Pro X
+- **Smart Analysis**: Automatically scores clips based on focus, composition, and audio
+- **Scene Detection**: Categorizes footage by wedding event (ceremony, reception, speeches, etc.)
+- **Auto-Selection**: Picks the best clips to hit your target highlight duration
+- **Timeline Export**: Generates FCPXML for Final Cut Pro or XML for Premiere Pro
+
+## Architecture
+
+```
+video-culler/
+├── desktop/          # Electron + React UI
+├── engine/           # Python analysis backend
+│   ├── analysis/     # Focus, composition, audio scoring
+│   ├── export/       # FCPXML, Premiere XML generation
+│   └── selection/    # Smart clip selection algorithm
+└── shared/           # Shared types and schemas
+```
 
 ## Tech Stack
 
-- **Electron** - Desktop app framework
-- **React** - UI framework
-- **Tailwind CSS** - Styling
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **FFmpeg** - Video processing
-- **Sharp** - Image analysis
-- **Zustand** - State management
+**Desktop App:**
+- Electron 28+
+- React 18 + Vite
+- Tailwind CSS
+- Zustand (state management)
 
-## Installation
+**Analysis Engine:**
+- Python 3.11+
+- FastAPI + Uvicorn
+- OpenCV (focus detection)
+- face_recognition (composition)
+- librosa (audio analysis)
+- FFmpeg (video processing)
+
+## Getting Started
+
+### Prerequisites
+- Node.js 20+
+- Python 3.11+
+- FFmpeg installed and in PATH
+
+### Installation
 
 ```bash
-cd ~/Projects/video-culler
+# Clone the repo
+git clone https://github.com/Carolina-Elite-Events/video-culler.git
+cd video-culler
+
+# Install desktop app
+cd desktop
 npm install
-```
 
-## Development
+# Install Python engine
+cd ../engine
+python -m venv venv
+source venv/bin/activate  # or `venv\Scripts\activate` on Windows
+pip install -r requirements.txt
 
-```bash
+# Run the app
+cd ../desktop
 npm run dev
 ```
 
-## Build
+## Workflow
 
-```bash
-# Build for macOS
-npm run build:mac
+1. **Import** - Select folder containing wedding video files
+2. **Analyze** - App extracts frames and scores each clip
+3. **Review** - Browse clips in grid, preview and adjust selections
+4. **Export** - Generate timeline for your NLE of choice
 
-# Build for Windows
-npm run build:win
+## Expected File Structure
+
 ```
-
-## Usage
-
-1. **Import Folder** - Select a folder containing your wedding videos
-   - Recommended structure: `A-Roll/`, `B-Roll/`, `RAW/`
-   
-2. **Wait for Analysis** - The app will:
-   - Scan all video files (MP4, MOV, etc.)
-   - Extract frames at 1-second intervals
-   - Calculate focus scores using Laplacian variance
-   - Generate thumbnails
-
-3. **Review & Select**
-   - Browse clips in a grid view
-   - Filter by folder (A-Roll, B-Roll, etc.)
-   - Sort by score, name, or duration
-   - Check clips to include in timeline
-   - Use "Select High Scores" for quick selection
-
-4. **Export Timeline**
-   - Click "Export Timeline"
-   - Save FCPXML file
-   - Open in Final Cut Pro X
-
-## Focus Scoring
-
-The focus score (0-100) measures image sharpness using **Laplacian variance**:
-
-- **80-100** (Green) - Sharp, in focus
-- **60-79** (Yellow) - Acceptable focus
-- **40-59** (Orange) - Soft focus
-- **0-39** (Red) - Out of focus
-
-## Roadmap
-
-### MVP (Current)
-- ✅ Video folder import
-- ✅ Focus detection
-- ✅ Grid UI with thumbnails
-- ✅ Manual selection
-- ✅ FCPXML export
-
-### Future Features
-- [ ] Audio analysis (speech, music, applause detection)
-- [ ] Scene categorization (ceremony, reception, etc.)
-- [ ] Composition scoring (face detection, rule of thirds)
-- [ ] Auto-select best clips based on scoring
-- [ ] Premiere Pro XML export
-- [ ] DaVinci Resolve export
-- [ ] Batch processing multiple projects
+Wedding_Project/
+├── A-Roll/          # Primary ceremony/reception footage
+├── B-Roll/          # Detail shots, decor, candids
+├── Audio/           # External audio recordings
+└── RAW/             # Original camera cards
+```
 
 ## License
 
-MIT License - Carolina Elite Events
+Proprietary - Carolina Elite Events
 
-## Author
+---
 
-Built by Jarvis for wedding videographers 🎬
+*Built for wedding videographers who want to spend less time culling and more time creating.*
