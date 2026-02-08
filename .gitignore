@@ -8,3 +8,23 @@ out
 *.dmg
 *.exe
 *.AppImage
+
+# Build artifacts
+build/
+*.zip
+*.tar.gz
+
+# OS files
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Test files
+test-videos/
+sample-output/
