@@ -1,5 +1,5 @@
 import { ipcMain, dialog } from 'electron'
-import { readdir, stat } from 'fs/promises'
+import { readdir } from 'fs/promises'
 import { join, basename, dirname, relative } from 'path'
 import { IPC_CHANNELS, VideoFile } from '../../shared/types'
 import ffmpeg from 'fluent-ffmpeg'

@@ -1,4 +1,3 @@
-import { ipcMain } from 'electron'
 import { setupFileHandlers } from './fileHandlers'
 import { setupAnalysisHandlers } from './analysisHandlers'
 import { setupClipHandlers } from './clipHandlers'

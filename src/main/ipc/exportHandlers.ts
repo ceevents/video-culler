@@ -38,7 +38,7 @@ function generateFCPXML(clips: VideoClip[], projectName: string): string {
 
   // Generate timeline clips
   let currentOffset = 0
-  const timelineClips = selectedClips.map((clip, index) => {
+  const timelineClips = selectedClips.map((clip) => {
     const resourceId = uniqueFiles.indexOf(clip.path) + 1
     const duration = clip.outPoint - clip.inPoint
     const start = clip.inPoint

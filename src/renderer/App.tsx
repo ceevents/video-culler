@@ -19,7 +19,9 @@ function App() {
       }
     })
 
-    return unsubscribe
+    return () => {
+      unsubscribe()
+    }
   }, [])
 
   useEffect(() => {

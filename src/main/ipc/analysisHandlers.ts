@@ -1,8 +1,8 @@
-import { ipcMain, BrowserWindow } from 'electron'
+import { ipcMain } from 'electron'
 import { IPC_CHANNELS, VideoFile, VideoClip, AnalysisProgress } from '../../shared/types'
 import ffmpeg from 'fluent-ffmpeg'
 import sharp from 'sharp'
-import { mkdtemp, writeFile, readFile } from 'fs/promises'
+import { mkdtemp } from 'fs/promises'
 import { join } from 'path'
 import { tmpdir } from 'os'
 import { setClips, getClips } from './clipHandlers'
@@ -82,9 +82,6 @@ async function analyzeVideo(video: VideoFile): Promise<VideoClip> {
 
 function extractFrames(videoPath: string, outputDir: string, interval: number): Promise<string[]> {
   return new Promise((resolve, reject) => {
-    const frames: string[] = []
-    let frameCount = 0
-
     ffmpeg(videoPath)
       .outputOptions([
         `-vf fps=1/${interval}` // Extract one frame every N seconds
